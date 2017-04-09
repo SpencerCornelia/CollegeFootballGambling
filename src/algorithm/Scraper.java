@@ -13,58 +13,169 @@ import org.jsoup.select.Elements;
 
 public class Scraper {
 
-	public static ArrayList<String> opponentsArray = new ArrayList<String>();
-	public static ArrayList<Integer> scoresArray = new ArrayList<Integer>();
+	public static ArrayList<String> opponentsArrayTeamOne = new ArrayList<String>();
+	public static ArrayList<Integer> scoresArrayTeamOne = new ArrayList<Integer>();
+	public static ArrayList<Integer> opponentsScoresArrayTeamOne = new ArrayList<Integer>();
+	
+	public static ArrayList<String> opponentsArrayTeamTwo = new ArrayList<String>();
+	public static ArrayList<Integer> scoresArrayTeamTwo = new ArrayList<Integer>();
+	public static ArrayList<Integer> opponentsScoresArrayTeamTwo = new ArrayList<Integer>();
 	
 	public static void main(String[] args)  throws IOException {
-		String teamID = "2005";
 		String year = "2008";
-		String url = "http://www.espn.com/college-football/team/schedule/_/id/" + teamID + "/year/" + year;
-		Document doc = Jsoup.connect(url).get();
 		
+		// grab the document from team 1 and send to parseDoc method
+		String team1 = "2005";
+		String url = "http://www.espn.com/college-football/team/schedule/_/id/" + team1 + "/year/" + year;
+		Document doc = Jsoup.connect(url).get();
+		parseDocTeamOne(doc);
+
+		// grab the document from team 2 and send to parseDoc method
+		String team2 = "2006";
+		String url2 = "http://www.espn.com/college-football/team/schedule/_/id/" + team2 + "/year/" + year;
+		Document doc2 = Jsoup.connect(url2).get();
+		parseDocTeamTwo(doc2);
+
+		// send scoresArray and opponentsArray to DB class
+		Formula one = new Formula();
+		one.receiveTeamOneOpponentsArray(opponentsArrayTeamOne);
+		one.receiveTeamOneScoresArray(scoresArrayTeamOne);
+		one.receiveTeamOneOpponentScoresArray(opponentsScoresArrayTeamOne);
+		
+		Formula two = new Formula();
+		two.receiveTeamTwoOpponentsArray(opponentsArrayTeamTwo);
+		two.receiveTeamTwoScoresArray(scoresArrayTeamTwo);
+		one.receiveTeamTwoOpponentScoresArray(opponentsScoresArrayTeamTwo);
+	}
+	
+	public static void parseDocTeamOne(Document doc) {
+
 		Elements tableRowElements = doc.select("table.tablehead tr");
 		
 		for (Element row : tableRowElements) {
 			String teamName = row.select(".team-name a").text();
 			if (teamName.length() > 1) {
-				teamOpponents(teamName);
-				String gameStatus = row.select(".greenfont").text();
-				if (gameStatus.length() > 0) {
+				teamOpponentsTeamOne(teamName);
+				String game = row.select(".game-status").text();
+				String gameStatus = game.substring(2);
+				Boolean win = gameStatus.contains("W"); 
+				if (win) {
 					String score = row.select(".score").text();
+					
+					// looks for games that ended in OT and removes the two letters from score
+					if (score.contains("O")) {
+						score = score.replace("O", "");
+						score = score.replace("T", "");
+						score = score.substring(0, score.length() - 1);
+					}
 					int dashIndex = score.indexOf("-");
 					String winningScore = score.substring(0, dashIndex);
 					int winningScoreInt = Integer.parseInt(winningScore);
 					String losingScore = score.substring(dashIndex + 1);
 					int losingScoreInt = Integer.parseInt(losingScore);
-					teamScore(gameStatus.length(), winningScoreInt, losingScoreInt);
+					teamScoreTeamOne(win, winningScoreInt, losingScoreInt);
 				} else {					
-					String score = row.select(".score").text();
+					String score = row.select(".score").text();					
+					
+					// looks for games that ended in OT and removes the two letters from score
+					if (score.contains("O")) {
+						score = score.replace("O", "");
+						score = score.replace("T", "");
+						score = score.substring(0, score.length() - 1);
+					}
 					int dashIndex = score.indexOf("-");
 					String winningScore = score.substring(0, dashIndex);
 					int winningScoreInt = Integer.parseInt(winningScore);
 					String losingScore = score.substring(dashIndex + 1);
 					int losingScoreInt = Integer.parseInt(losingScore);
-					teamScore(gameStatus.length(), winningScoreInt, losingScoreInt);
+					teamScoreTeamOne(win, winningScoreInt, losingScoreInt);
 				}
 			}
 			
 		}
 	}
 	
-	public static void teamScore(int gameStatus, int winningScore, int losingScore) {
+	public static void parseDocTeamTwo(Document doc) {
+		
+		Elements tableRowElements = doc.select("table.tablehead tr");
+		
+		for (Element row : tableRowElements) {
+			String teamName = row.select(".team-name a").text();
+			if (teamName.length() > 1) {
+				teamOpponentsTeamTwo(teamName);
+				String game = row.select(".game-status").text();
+				String gameStatus = game.substring(2);
+				Boolean win = gameStatus.contains("W"); 
+				if (win) {
+					String score = row.select(".score").text();
+					
+					// looks for games that ended in OT and removes the two letters from score
+					if (score.contains("O")) {
+						score = score.replace("O", "");
+						score = score.replace("T", "");
+						score = score.substring(0, score.length() - 1);
+					}
+					int dashIndex = score.indexOf("-");
+					String winningScore = score.substring(0, dashIndex);
+					int winningScoreInt = Integer.parseInt(winningScore);
+					String losingScore = score.substring(dashIndex + 1);
+					int losingScoreInt = Integer.parseInt(losingScore);
+					teamScoreTeamTwo(win, winningScoreInt, losingScoreInt);
+				} else {					
+					String score = row.select(".score").text();					
+					
+					// looks for games that ended in OT and removes the two letters from score
+					if (score.contains("O")) {
+						score = score.replace("O", "");
+						score = score.replace("T", "");
+						score = score.substring(0, score.length() - 1);
+					}
+					int dashIndex = score.indexOf("-");
+					String winningScore = score.substring(0, dashIndex);
+					int winningScoreInt = Integer.parseInt(winningScore);
+					String losingScore = score.substring(dashIndex + 1);
+					int losingScoreInt = Integer.parseInt(losingScore);
+					teamScoreTeamTwo(win, winningScoreInt, losingScoreInt);
+				}
+			}
+			
+		}
+		
+	}
+
+	// Team One
+	
+	public static void teamScoreTeamOne(boolean win, int winningScore, int losingScore) {
 		//System.out.println("winningScore = " + winningScore);
 		//System.out.println("losingScore = " + losingScore);
 		
-		if (gameStatus > 0) {
-			scoresArray.add(winningScore);
+		if (win) {
+			scoresArrayTeamOne.add(winningScore);
+			opponentsScoresArrayTeamOne.add(losingScore);
 		} else {
-			scoresArray.add(losingScore);
+			scoresArrayTeamOne.add(losingScore);
+			opponentsScoresArrayTeamOne.add(winningScore);
 		}
 	}
 	
-	public static void teamOpponents(String opponent) {
-		opponentsArray.add(opponent);
+	public static void teamOpponentsTeamOne(String opponent) {
+		opponentsArrayTeamOne.add(opponent);
 	}
 	
-	// send scoresArray and opponentsArray to DB class
+	// Team Two
+
+	public static void teamScoreTeamTwo(boolean win, int winningScore, int losingScore) {
+		
+		if (win) {
+			scoresArrayTeamTwo.add(winningScore);
+			opponentsScoresArrayTeamTwo.add(losingScore);
+		} else {
+			scoresArrayTeamTwo.add(losingScore);
+			opponentsScoresArrayTeamTwo.add(winningScore);
+		}
+	}
+	
+	public static void teamOpponentsTeamTwo(String opponent) {
+		opponentsArrayTeamTwo.add(opponent);
+	}
 }
