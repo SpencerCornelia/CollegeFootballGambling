@@ -28,13 +28,14 @@ public class Driver {
 			// int yourRs = twoStmt.executeUpdate("insert into CollegeFootballStats.Test (PassYards) Values (10000)");
 			
 			/*  ONLY USE THIS FOR CLEARING ALL TABLES
-			/* */
+			/* 
 			int createTableRs;
 			for (int i = 0; i < teamsList.length; i++) {
 				createTableRs = threeStmt.executeUpdate(
 					"TRUNCATE" + " `" + DBName + "`.`" + teamsList[i] + "`" 
 				);
 			}
+			*/
 			
 			
 			/* ***** Use updateNumOfGames.java file for creating first row of data in a new table *****
