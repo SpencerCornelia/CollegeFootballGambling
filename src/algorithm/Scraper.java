@@ -22,30 +22,36 @@ public class Scraper {
 	public static ArrayList<Integer> opponentsScoresArrayTeamTwo = new ArrayList<Integer>();
 	
 	public static void main(String[] args)  throws IOException {
-		String year = "2008";
+		String year = "2016";
 		
 		// grab the document from team 1 and send to parseDoc method
-		String team1 = "2005";
+		String team1 = "8";
+		String team1Name = "Arkansas";
 		String url = "http://www.espn.com/college-football/team/schedule/_/id/" + team1 + "/year/" + year;
 		Document doc = Jsoup.connect(url).get();
 		parseDocTeamOne(doc);
 
 		// grab the document from team 2 and send to parseDoc method
-		String team2 = "2006";
+		String team2 = "2032";
+		String team2Name = "Arkansas State";
 		String url2 = "http://www.espn.com/college-football/team/schedule/_/id/" + team2 + "/year/" + year;
 		Document doc2 = Jsoup.connect(url2).get();
 		parseDocTeamTwo(doc2);
 
-		// send scoresArray and opponentsArray to DB class
+		// send scoresArray and opponentsArray to Formula class
 		Formula one = new Formula();
+		one.receiveTeamOneName(team1Name);
 		one.receiveTeamOneOpponentsArray(opponentsArrayTeamOne);
 		one.receiveTeamOneScoresArray(scoresArrayTeamOne);
 		one.receiveTeamOneOpponentScoresArray(opponentsScoresArrayTeamOne);
+		one.teamOneUpdateDB();
 		
 		Formula two = new Formula();
+		two.receiveTeamTwoName(team2Name);
 		two.receiveTeamTwoOpponentsArray(opponentsArrayTeamTwo);
 		two.receiveTeamTwoScoresArray(scoresArrayTeamTwo);
-		one.receiveTeamTwoOpponentScoresArray(opponentsScoresArrayTeamTwo);
+		two.receiveTeamTwoOpponentScoresArray(opponentsScoresArrayTeamTwo);
+		two.teamTwoUpdateDB();
 	}
 	
 	public static void parseDocTeamOne(Document doc) {
@@ -68,6 +74,9 @@ public class Scraper {
 						score = score.replace("T", "");
 						score = score.substring(0, score.length() - 1);
 					}
+					if (score.contains(" ")) {
+						score = score.substring(0, score.length() - 1);
+					}
 					int dashIndex = score.indexOf("-");
 					String winningScore = score.substring(0, dashIndex);
 					int winningScoreInt = Integer.parseInt(winningScore);
@@ -81,6 +90,9 @@ public class Scraper {
 					if (score.contains("O")) {
 						score = score.replace("O", "");
 						score = score.replace("T", "");
+						score = score.substring(0, score.length() - 1);
+					}
+					if (score.contains(" ")) {
 						score = score.substring(0, score.length() - 1);
 					}
 					int dashIndex = score.indexOf("-");
@@ -115,6 +127,9 @@ public class Scraper {
 						score = score.replace("T", "");
 						score = score.substring(0, score.length() - 1);
 					}
+					if (score.contains(" ")) {
+						score = score.substring(0, score.length() - 1);
+					}
 					int dashIndex = score.indexOf("-");
 					String winningScore = score.substring(0, dashIndex);
 					int winningScoreInt = Integer.parseInt(winningScore);
@@ -128,6 +143,9 @@ public class Scraper {
 					if (score.contains("O")) {
 						score = score.replace("O", "");
 						score = score.replace("T", "");
+						score = score.substring(0, score.length() - 1);
+					}
+					if (score.contains(" ")) {
 						score = score.substring(0, score.length() - 1);
 					}
 					int dashIndex = score.indexOf("-");
@@ -146,8 +164,6 @@ public class Scraper {
 	// Team One
 	
 	public static void teamScoreTeamOne(boolean win, int winningScore, int losingScore) {
-		//System.out.println("winningScore = " + winningScore);
-		//System.out.println("losingScore = " + losingScore);
 		
 		if (win) {
 			scoresArrayTeamOne.add(winningScore);

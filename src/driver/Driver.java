@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Driver {
 
 	public static void main(String[] args) {
-		String DBName = "CollegeFootballStats2016";
+		String DBName = "Scores2008";
 		String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 		String DBusername = "root";
 		String DBpassword = "Wutangclan25";
@@ -28,7 +28,6 @@ public class Driver {
 			// int yourRs = twoStmt.executeUpdate("insert into CollegeFootballStats.Test (PassYards) Values (10000)");
 			
 			/*  ONLY USE THIS FOR CLEARING ALL TABLES
-			/* 
 			int createTableRs;
 			for (int i = 0; i < teamsList.length; i++) {
 				createTableRs = threeStmt.executeUpdate(
@@ -41,7 +40,7 @@ public class Driver {
 			/* ***** Use updateNumOfGames.java file for creating first row of data in a new table *****
 			*/
 			/* DO NOT RUN THIS until necessary
-			 /* 
+			 /*  ***  This is query for creating new CollegeFootballStats schema in DB
 			int createTableRs;
 			for (int i = 0; i < teamsList.length; i++) {	
 				createTableRs = threeStmt.executeUpdate(
@@ -80,6 +79,19 @@ public class Driver {
 			}
 			*/
 			
+			/* ***  This is for creating Scores schema ***
+			int createTableRs;
+			for (int i = 0; i < teamsList.length; i++) {	
+				createTableRs = threeStmt.executeUpdate(
+						 "CREATE TABLE" + " `" + DBName + "`.`" + teamsList[i] + "` (" 
+					   + "`Opponent` VARCHAR(50) NULL, "
+					   + "`TeamScore` INT NULL, "
+					   + "`OpponentScore` INT NULL);"
+				);
+			}
+			*/
+			
+
 			// 4. Process the result set
 			/*
 			while (myRs.next()) {
