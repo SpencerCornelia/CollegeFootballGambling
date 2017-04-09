@@ -95,8 +95,7 @@ public class Formula {
 			int teamScore = teamOneScoresArrayList.get(i);
 			int opponentScore = teamOneOpponentsScoresArrayList.get(i);
 			if (opponent.contains("'")) {
-				opponent = "Hawai'i";
-				Hawaii(teamScore, opponentScore);
+				teamOneHawaii(teamScore, opponentScore);
 				continue;
 			}
 			try {
@@ -128,7 +127,7 @@ public class Formula {
 			int teamScore = teamTwoScoresArrayList.get(i);
 			int opponentScore = teamTwoOpponentsScoresArrayList.get(i);
 			if (opponent.contains("'")) {
-				Hawaii(teamScore, opponentScore);
+				teamTwoHawaii(teamScore, opponentScore);
 				continue;
 			}
 			try {
@@ -152,7 +151,7 @@ public class Formula {
 		}
 	}
 	
-	public void Hawaii(int teamScore, int opponentScore) {
+	public void teamOneHawaii(int teamScore, int opponentScore) {
 		try {
 			// 1. Get a connection to database
 			Connection myConn = DriverManager.getConnection(DBurl, DBusername, DBpassword);
@@ -169,7 +168,26 @@ public class Formula {
 		} catch (Exception ex) {
 			System.out.println("exception is " + ex);
 		}
-}
+	}
+	
+	public void teamTwoHawaii(int teamScore, int opponentScore) {
+		try {
+			// 1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(DBurl, DBusername, DBpassword);
+			
+			// 2. Create a statement
+			Statement myStmt = myConn.createStatement();
+			
+			// 3. Execute a SQL Query
+			int yourRs = myStmt.executeUpdate(
+					"INSERT INTO `" + DBName + "`.`" + teamTwoName + "`" 
+					+ " (Opponent, TeamScore, OpponentScore) VALUES('Hawaii', " + teamScore + ", " + opponentScore + ");"
+					);
+
+		} catch (Exception ex) {
+			System.out.println("exception is " + ex);
+		}
+	}
 
 }
 

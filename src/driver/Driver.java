@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Driver {
 
 	public static void main(String[] args) {
-		String DBName = "Scores2015";
+		String DBName = "Scores2008";
 		String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 		String DBusername = "root";
 		String DBpassword = "Wutangclan25";
@@ -35,12 +35,6 @@ public class Driver {
 				);
 			}
 			*/
-			int createTableRs;
-			for (int i = 0; i < teamsList.length; i++) {
-				createTableRs = threeStmt.executeUpdate(
-					"TRUNCATE" + " `" + DBName + "`.`" + teamsList[i] + "`" 
-				);
-			}
 			
 			/* ***** Use updateNumOfGames.java file for creating first row of data in a new table *****
 			*/
