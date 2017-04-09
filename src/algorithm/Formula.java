@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Formula {
 	// DB Info
-	String DBName = "Scores2016";
+	String DBName = "Scores2008";
 	String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 	String DBusername = "root";
 	String DBpassword = "Wutangclan25";
@@ -94,6 +94,11 @@ public class Formula {
 			String opponent = teamOneOpponentsArrayList.get(i);
 			int teamScore = teamOneScoresArrayList.get(i);
 			int opponentScore = teamOneOpponentsScoresArrayList.get(i);
+			if (opponent.contains("'")) {
+				opponent = "Hawai'i";
+				Hawaii(teamScore, opponentScore);
+				continue;
+			}
 			try {
 				// 1. Get a connection to database
 				Connection myConn = DriverManager.getConnection(DBurl, DBusername, DBpassword);
@@ -111,6 +116,7 @@ public class Formula {
 
 			} catch (Exception ex) {
 				System.out.println("exception is " + ex);
+				System.out.println("Opponent is " + opponent);
 			}
 		}
 	}
@@ -121,6 +127,10 @@ public class Formula {
 			String opponent = teamTwoOpponentsArrayList.get(i);
 			int teamScore = teamTwoScoresArrayList.get(i);
 			int opponentScore = teamTwoOpponentsScoresArrayList.get(i);
+			if (opponent.contains("'")) {
+				Hawaii(teamScore, opponentScore);
+				continue;
+			}
 			try {
 				// 1. Get a connection to database
 				Connection myConn = DriverManager.getConnection(DBurl, DBusername, DBpassword);
@@ -141,6 +151,25 @@ public class Formula {
 			}
 		}
 	}
+	
+	public void Hawaii(int teamScore, int opponentScore) {
+		try {
+			// 1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(DBurl, DBusername, DBpassword);
+			
+			// 2. Create a statement
+			Statement myStmt = myConn.createStatement();
+			
+			// 3. Execute a SQL Query
+			int yourRs = myStmt.executeUpdate(
+					"INSERT INTO `" + DBName + "`.`" + teamOneName + "`" 
+					+ " (Opponent, TeamScore, OpponentScore) VALUES('Hawaii', " + teamScore + ", " + opponentScore + ");"
+					);
+
+		} catch (Exception ex) {
+			System.out.println("exception is " + ex);
+		}
+}
 
 }
 
