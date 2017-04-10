@@ -25,19 +25,20 @@ public class Scraper {
 		String year = "2016";
 		
 		// grab the document from team 1 and send to parseDoc method
-		String team1 = "38";
-		String team1Name = "Colorado";
+		String team1 = "2309";
+		String team1Name = "Kent State";
 		String url = "http://www.espn.com/college-football/team/schedule/_/id/" + team1 + "/year/" + year;
 		Document doc = Jsoup.connect(url).get();
 		parseDocTeamOne(doc);
 
 		// grab the document from team 2 and send to parseDoc method
-		String team2 = "36";
-		String team2Name = "Colorado State";
+		
+		String team2 = "96";
+		String team2Name = "Kentucky";
 		String url2 = "http://www.espn.com/college-football/team/schedule/_/id/" + team2 + "/year/" + year;
 		Document doc2 = Jsoup.connect(url2).get();
 		parseDocTeamTwo(doc2);
-
+		 
 		// send scoresArray and opponentsArray to Formula class
 		Formula one = new Formula();
 		one.receiveTeamOneName(team1Name);
@@ -52,9 +53,11 @@ public class Scraper {
 		two.receiveTeamTwoScoresArray(scoresArrayTeamTwo);
 		two.receiveTeamTwoOpponentScoresArray(opponentsScoresArrayTeamTwo);
 		two.teamTwoUpdateDB();
+		
 	}
 	
 	public static void parseDocTeamOne(Document doc) {
+
 
 		Elements tableRowElements = doc.select("table.tablehead tr");
 		
@@ -62,9 +65,24 @@ public class Scraper {
 			String teamName = row.select(".team-name a").text();
 			if (teamName.length() > 1) {
 				teamOpponentsTeamOne(teamName);
+				String scoreText = row.select(".score").text();
+				
+				// if game gets canceled look for this text
+				if (scoreText.equalsIgnoreCase("canceled")) {
+					teamScoreTeamOne(true, -1, -1);
+					continue;
+				}
+				
 				String game = row.select(".game-status").text();
+				
+				if (game.equalsIgnoreCase("@")) {
+					teamScoreTeamOne(true, -1, -1);
+					continue;
+				}
 				String gameStatus = game.substring(2);
-				Boolean win = gameStatus.contains("W"); 
+				Boolean win = gameStatus.contains("W");
+				
+
 				if (win) {
 					String score = row.select(".score").text();
 					
@@ -130,9 +148,18 @@ public class Scraper {
 			String teamName = row.select(".team-name a").text();
 			if (teamName.length() > 1) {
 				teamOpponentsTeamTwo(teamName);
+				String scoreText = row.select(".score").text();
+				
+				// if game gets canceled look for this text
+				if (scoreText.equalsIgnoreCase("canceled")) {
+					teamScoreTeamTwo(true, -1, -1);
+					continue;
+				}
+				
 				String game = row.select(".game-status").text();
 				String gameStatus = game.substring(2);
 				Boolean win = gameStatus.contains("W"); 
+				
 				if (win) {
 					String score = row.select(".score").text();
 					
