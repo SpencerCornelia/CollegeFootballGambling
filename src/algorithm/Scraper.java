@@ -22,23 +22,23 @@ public class Scraper {
 	public static ArrayList<Integer> opponentsScoresArrayTeamTwo = new ArrayList<Integer>();
 	
 	public static void main(String[] args)  throws IOException {
-		String year = "2016";
+		String year = "2011";
 		
 		// grab the document from team 1 and send to parseDoc method
-		String team1 = "2309";
-		String team1Name = "Kent State";
+		String team1 = "2636";
+		String team1Name = "UTSA";
 		String url = "http://www.espn.com/college-football/team/schedule/_/id/" + team1 + "/year/" + year;
 		Document doc = Jsoup.connect(url).get();
 		parseDocTeamOne(doc);
 
-		// grab the document from team 2 and send to parseDoc method
-		
-		String team2 = "96";
-		String team2Name = "Kentucky";
+		// grab the document from team 2 and send to parseDoc method		
+		/*
+		String team2 = "275";
+		String team2Name = "Wisconsin";
 		String url2 = "http://www.espn.com/college-football/team/schedule/_/id/" + team2 + "/year/" + year;
 		Document doc2 = Jsoup.connect(url2).get();
 		parseDocTeamTwo(doc2);
-		 
+		 */
 		// send scoresArray and opponentsArray to Formula class
 		Formula one = new Formula();
 		one.receiveTeamOneName(team1Name);
@@ -46,14 +46,14 @@ public class Scraper {
 		one.receiveTeamOneScoresArray(scoresArrayTeamOne);
 		one.receiveTeamOneOpponentScoresArray(opponentsScoresArrayTeamOne);
 		one.teamOneUpdateDB();
-		
+		/*
 		Formula two = new Formula();
 		two.receiveTeamTwoName(team2Name);
 		two.receiveTeamTwoOpponentsArray(opponentsArrayTeamTwo);
 		two.receiveTeamTwoScoresArray(scoresArrayTeamTwo);
 		two.receiveTeamTwoOpponentScoresArray(opponentsScoresArrayTeamTwo);
 		two.teamTwoUpdateDB();
-		
+		*/
 	}
 	
 	public static void parseDocTeamOne(Document doc) {

@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Formula {
 	// DB Info
-	String DBName = "Scores2016";
+	String DBName = "Scores2011";
 	String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 	String DBusername = "root";
 	String DBpassword = "Wutangclan25";
@@ -94,10 +94,20 @@ public class Formula {
 			String opponent = teamOneOpponentsArrayList.get(i);
 			int teamScore = teamOneScoresArrayList.get(i);
 			int opponentScore = teamOneOpponentsScoresArrayList.get(i);
+			
+			// check for hawaii as opponent
 			if (opponent.contains("'")) {
 				teamOneHawaii(teamScore, opponentScore);
 				continue;
 			}
+			
+			// check for San Jose St as opponent
+			Boolean b = opponent.startsWith("San Jos");
+			if (b) {
+				teamOneSanJose(teamScore, opponentScore);
+				continue;
+			}
+			
 			try {
 				// 1. Get a connection to database
 				Connection myConn = DriverManager.getConnection(DBurl, DBusername, DBpassword);
@@ -126,8 +136,17 @@ public class Formula {
 			String opponent = teamTwoOpponentsArrayList.get(i);
 			int teamScore = teamTwoScoresArrayList.get(i);
 			int opponentScore = teamTwoOpponentsScoresArrayList.get(i);
+			
+			// check for Hawaii as opponent
 			if (opponent.contains("'")) {
 				teamTwoHawaii(teamScore, opponentScore);
+				continue;
+			}
+			
+			// check for San Jose St as opponent
+			Boolean b = opponent.startsWith("San Jos");
+			if (b) {
+				teamTwoSanJose(teamScore, opponentScore);
 				continue;
 			}
 			try {
@@ -182,6 +201,44 @@ public class Formula {
 			int yourRs = myStmt.executeUpdate(
 					"INSERT INTO `" + DBName + "`.`" + teamTwoName + "`" 
 					+ " (Opponent, TeamScore, OpponentScore) VALUES('Hawaii', " + teamScore + ", " + opponentScore + ");"
+					);
+
+		} catch (Exception ex) {
+			System.out.println("exception is " + ex);
+		}
+	}
+	
+	public void teamOneSanJose(int teamScore, int opponentScore) {
+		try {
+			// 1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(DBurl, DBusername, DBpassword);
+			
+			// 2. Create a statement
+			Statement myStmt = myConn.createStatement();
+			
+			// 3. Execute a SQL Query
+			int yourRs = myStmt.executeUpdate(
+					"INSERT INTO `" + DBName + "`.`" + teamOneName + "`" 
+					+ " (Opponent, TeamScore, OpponentScore) VALUES('San Jose State', " + teamScore + ", " + opponentScore + ");"
+					);
+
+		} catch (Exception ex) {
+			System.out.println("exception is " + ex);
+		}
+	}
+	
+	public void teamTwoSanJose(int teamScore, int opponentScore) {
+		try {
+			// 1. Get a connection to database
+			Connection myConn = DriverManager.getConnection(DBurl, DBusername, DBpassword);
+			
+			// 2. Create a statement
+			Statement myStmt = myConn.createStatement();
+			
+			// 3. Execute a SQL Query
+			int yourRs = myStmt.executeUpdate(
+					"INSERT INTO `" + DBName + "`.`" + teamTwoName + "`" 
+					+ " (Opponent, TeamScore, OpponentScore) VALUES('San Jose State', " + teamScore + ", " + opponentScore + ");"
 					);
 
 		} catch (Exception ex) {
