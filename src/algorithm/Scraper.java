@@ -44,7 +44,7 @@ public class Scraper {
 		for (Element row : tableRowElements) {
 			String teamName = row.select(".team-name a").text();
 			if (teamName.length() > 1) {
-				teamOpponentsTeamOne(teamName);
+				teamOpponents(teamName);
 				String scoreText = row.select(".score").text();
 				
 				// if game gets canceled look for this text
@@ -131,7 +131,7 @@ public class Scraper {
 		}
 	}
 	
-	public static void teamOpponentsTeamOne(String opponent) {
+	public static void teamOpponents(String opponent) {
 		opponentsArray.add(opponent);
 	}
 }
