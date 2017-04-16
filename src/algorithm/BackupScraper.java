@@ -40,6 +40,7 @@ public class BackupScraper {
 		parseDocTeamTwo(doc2);
 		 */
 		// send scoresArray and opponentsArray to Formula class
+		/*
 		Formula one = new Formula();
 		one.receiveTeamOneName(team1Name);
 		one.receiveTeamOneOpponentsArray(opponentsArrayTeamOne);

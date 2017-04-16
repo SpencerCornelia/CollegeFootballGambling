@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Driver {
 
 	public static void main(String[] args) {
-		String DBName = "Scores2008";
+		String DBName = "Test";
 		String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 		String DBusername = "root";
 		String DBpassword = "Wutangclan25";
@@ -34,21 +34,14 @@ public class Driver {
 			// ResultSet myRs = myStmt.executeQuery("select * from CollegeFootballStats.Test");
 			// int yourRs = twoStmt.executeUpdate("insert into CollegeFootballStats.Test (PassYards) Values (10000)");
 			
-			/*  ONLY USE THIS FOR CLEARING ALL TABLES
-			 
+			// ONLY USE THIS FOR CLEARING ALL TABLES
+
 			int createTableRs;
-			for (int i = 0; i < 1; i++) {
+			for (int i = 0; i < teamsList.length; i++) {
 				createTableRs = threeStmt.executeUpdate(
-					"TRUNCATE" + " `" + DBName + "`.`" + "Georgia Southern" + "`" 
+					"TRUNCATE" + " `" + DBName + "`.`" + teamsList[i] + "`" 
 				);
 			}
-			*/
-			/* *** an example of UPDATE SQL query
-			UPDATE `Scores2008`.`Test`
-			SET
-			`Opponent` = "test" 
-			WHERE `Opponent` = 'cornelia'
-			*/
 			
 			/* *** use this for all of the teams that get inputted incorrectly as Opponents
 			int createTableRs;
@@ -103,7 +96,8 @@ public class Driver {
 			}
 			*/
 			
-			/* ***  This is for creating Scores schema ***
+			// ***  This is for creating Scores schema ***
+			/*
 			int createTableRs;
 			for (int i = 0; i < teamsList.length; i++) {	
 				createTableRs = threeStmt.executeUpdate(
@@ -114,7 +108,6 @@ public class Driver {
 				);
 			}
 			*/
-			
 
 			// 4. Process the result set
 			/*

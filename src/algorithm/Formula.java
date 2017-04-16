@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class Formula {
 	// DB Info
-	String DBName = "Scores2017";
+	String DBName = "Test";
 	String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 	String DBusername = "root";
 	String DBpassword = "Wutangclan25";
