@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Driver {
 
 	public static void main(String[] args) {
-		String DBName = "Test";
+		String DBName = "Scores2016";
 		String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 		String DBusername = "root";
 		String DBpassword = "Wutangclan25";
@@ -20,10 +20,10 @@ public class Driver {
 		String[] teamsList = {"Air Force", "Akron", "Alabama", "Appalachian State", "Arizona", "Arizona State", "Arkansas", "Arkansas State", "Army", "Auburn", "Ball State", "Baylor", "Boise State", "Boston College", "Bowling Green", "Buffalo", "BYU", "California", "Fresno State", "UCLA", "UCF", "Central Michigan", "Charlotte", "Cincinnati", "Clemson", "Colorado", "Colorado State", "Connecticut", "Duke", "Eastern Michigan", "East Carolina", "Florida International", "Florida", "Florida Atlantic", "Florida State", "Georgia", "Georgia Southern", "Georgia Tech", "Hawaii", "Houston", "Idaho", "Illinois", "Indiana", "Iowa", "Iowa State", "Kansas", "Kansas State", "Kent State", "Kentucky", "LSU", "Louisiana Tech", "Louisiana-Lafayette", "Louisiana-Monroe", "Louisville", "Marshall", "Maryland", "Massachusetts", "Memphis", "Miami (Florida)", "Miami (Ohio)", "Michigan", "Michigan State", "Middle Tennessee", "Minnesota", "Mississippi", "Mississippi State", "Missouri", "Navy", "Nebraska", "Nevada", "UNLV", "New Mexico", "New Mexico State", "North Carolina", "North Carolina State", "North Texas", "Northern Illinois", "Northwestern", "Notre Dame", "Ohio", "Ohio State", "Oklahoma", "Oklahoma State", "Old Dominion", "Oregon", "Oregon State", "Penn State", "Pittsburgh", "Purdue", "Rice", "Rutgers", "San Diego State", "San Jose State", "South Alabama", "South Carolina", "South Florida", "USC", "SMU", "Southern Mississippi", "Stanford", "Syracuse", "TCU", "Temple", "Tennessee", "Texas", "Texas A&M", "Texas State", "Texas Tech", "UTEP", "UTSA", "Toledo", "Troy", "Tulane", "Tulsa", "Utah", "Utah State", "Vanderbilt", "Virginia", "Virginia Tech", "Wake Forest", "Washington", "Washington State", "West Virginia", "Western Kentucky", "Western Michigan", "Wisconsin", "Wyoming", "UAB", "Georgia State"};
 		
 		// list of all teams incorrectly added to DB from ESPN scores scraping
-		String[] teamToEditList = {"Cal", "W Michigan", "Miami (OH)", "Appalachian St", "Ga Southern", "Washington St", "UMass", "E Michigan", "UConn", "Cent Michigan", "New Mexico St", "UL Monroe", "UL Lafayette", "Southern Miss", "Ole Miss", "Mid Tennessee", "FIU", "FAU", "Miss St", "NC State", "Miami"};
+		String[] teamToEditList = {"Cal", "W Michigan", "Miami (OH)", "Appalachian St", "Ga Southern", "Washington St", "UMass", "E Michigan", "UConn", "Cent Michigan", "New Mexico St", "UL Monroe", "UL Lafayette", "Southern Miss", "Ole Miss", "Mid Tennessee", "FIU", "FAU", "Miss St", "NC State", "Miami", "San José State"};
 		
 		// list of updated names to update in DB - make sure this list mirrors teamToEditList
-		String [] teamEditList = {"California", "Western Michigan", "Miami (Ohio)", "Appalachian State", "Georgia Southern", "Washington State", "Massachusetts", "Eastern Michigan", "Connecticut", "Central Michigan", "New Mexico State", "Louisiana-Monroe", "Louisiana-Lafayette", "Southern Mississippi", "Mississippi", "Middle Tennessee", "Florida International", "Florida Atlantic", "Mississippi State", "North Carolina State", "Miami (Florida)"};
+		String [] teamEditList = {"California", "Western Michigan", "Miami (Ohio)", "Appalachian State", "Georgia Southern", "Washington State", "Massachusetts", "Eastern Michigan", "Connecticut", "Central Michigan", "New Mexico State", "Louisiana-Monroe", "Louisiana-Lafayette", "Southern Mississippi", "Mississippi", "Middle Tennessee", "Florida International", "Florida Atlantic", "Mississippi State", "North Carolina State", "Miami (Florida)", "San Jose State"};
 		
 		try {
 			// 1. Get a connection to database
@@ -51,13 +51,25 @@ public class Driver {
 			*/
 			
 			// *** use this for all of the teams that get inputted incorrectly as Opponents
-			/* 
+			/*
 			int createTableRs;
 			for (int i = 0; i < teamToEditList.length; i++) {
 				createTableRs = threeStmt.executeUpdate(
 					"UPDATE " + "`" + DBName + "`.`" + teamsList[i] + "` "
-				    + "SET `Opponent` = '" + teamEditList[i] +"' "
-					+ "WHERE `Opponent`='" + teamToEditList[i] + "'"		
+				    + "SET `Opponent` = '" + teamsEditList[i] +"' "
+					+ "WHERE `Opponent`='" + teamsToEditList[i] + "'"		
+				);
+			}
+			*/
+			
+			// update the Scores DB for San Jose State
+			/* 
+			int createTableRs;
+			for (int i = 0; i < 1; i++) {
+				createTableRs = threeStmt.executeUpdate(
+					"UPDATE " + "`" + DBName + "`.`" + teamsList[i] + "` "
+				    + "SET `Opponent` = '" + "San Jose State" +"' "
+					+ "WHERE `Opponent`='" + "San José State" + "'"		
 				);
 			}
 			*/
