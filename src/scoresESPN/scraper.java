@@ -4,7 +4,7 @@
  * to the Formula.java class.
  * the parseDoc method deals with parsing the information from ESPN
  */
-package algorithm;
+package scoresESPN;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 
-public class Scraper {
+public class scraper {
 
 	public static ArrayList<String> opponentsArray = new ArrayList<String>();
 	public static ArrayList<Integer> scoresArray = new ArrayList<Integer>();
@@ -39,7 +39,7 @@ public class Scraper {
 			parseDoc(doc);
 			
 			// send scoresArray and opponentsArray to Formula class
-			Formula one = new Formula();
+			updateScoresDB one = new updateScoresDB();
 			one.receiveTeamName(teamName);
 			one.receiveTeamOpponentsArray(opponentsArray);
 			one.receiveTeamScoresArray(scoresArray);

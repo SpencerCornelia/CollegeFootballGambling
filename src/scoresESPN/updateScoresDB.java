@@ -3,7 +3,7 @@
  * stores that information into its own Array Lists
  * and then uses that info to insert into the DB
  */
-package algorithm;
+package scoresESPN;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class Formula {
+public class updateScoresDB {
 	// DB Info
 	String DBName = "Test";
 	String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
