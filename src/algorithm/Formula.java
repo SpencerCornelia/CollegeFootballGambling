@@ -86,6 +86,11 @@ public class Formula {
 				System.out.println("Opponent is " + opponent);
 			}
 		}
+		
+		// clear out all Array Lists 
+		opponentsArrayList.clear();
+		scoresArrayList.clear();
+		opponentsScoresArrayList.clear();
 	}
 
 	public void teamHawaii(int teamScore, int opponentScore) {
