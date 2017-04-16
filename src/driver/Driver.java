@@ -1,3 +1,9 @@
+/*
+ * this class does all testing with DB interaction
+ * this class also provides a way to create new tables for all FCS teams for a new year
+ * this class also includes a way to update the DB when ESPN provides team names that don't coincide with the DB
+ */
+
 package driver;
 import java.sql.*;
 import java.util.ArrayList;
@@ -35,15 +41,17 @@ public class Driver {
 			// int yourRs = twoStmt.executeUpdate("insert into CollegeFootballStats.Test (PassYards) Values (10000)");
 			
 			// ONLY USE THIS FOR CLEARING ALL TABLES
-
+			/*
 			int createTableRs;
 			for (int i = 0; i < teamsList.length; i++) {
 				createTableRs = threeStmt.executeUpdate(
 					"TRUNCATE" + " `" + DBName + "`.`" + teamsList[i] + "`" 
 				);
 			}
+			*/
 			
-			/* *** use this for all of the teams that get inputted incorrectly as Opponents
+			// *** use this for all of the teams that get inputted incorrectly as Opponents
+			/* 
 			int createTableRs;
 			for (int i = 0; i < teamToEditList.length; i++) {
 				createTableRs = threeStmt.executeUpdate(
@@ -54,10 +62,9 @@ public class Driver {
 			}
 			*/
 			
-			/* ***** Use updateNumOfGames.java file for creating first row of data in a new table *****
-			*/
-			/* DO NOT RUN THIS until necessary
-			 /*  ***  This is query for creating new CollegeFootballStats schema in DB
+			// ***** Use updateNumOfGames.java file for creating first row of data in a new table *****
+			//   ***  This is query for creating new CollegeFootballStats schema in DB 
+			/*
 			int createTableRs;
 			for (int i = 0; i < teamsList.length; i++) {	
 				createTableRs = threeStmt.executeUpdate(

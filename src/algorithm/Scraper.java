@@ -1,3 +1,9 @@
+/*
+ * this class scrapes ESPN to grab the scores of all FBS games
+ * and sends the Team Name, Opponent Name, Team Score, and Opponent Score
+ * to the Formula.java class.
+ * the parseDoc method deals with parsing the information from ESPN
+ */
 package algorithm;
 
 import java.io.IOException;

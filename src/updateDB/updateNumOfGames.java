@@ -1,3 +1,8 @@
+/*
+ * run this class first when adding stats from cfbstats.com as it inserts the necessary first row into the DB
+ * all other classes update the row 
+ */
+
 package updateDB;
 
 import java.sql.*;

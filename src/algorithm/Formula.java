@@ -1,3 +1,8 @@
+/*
+ * this class receives Opponent, Team Score, and Opponent Score info from Scraper.java 
+ * stores that information into its own Array Lists
+ * and then uses that info to insert into the DB
+ */
 package algorithm;
 
 import java.sql.Connection;
