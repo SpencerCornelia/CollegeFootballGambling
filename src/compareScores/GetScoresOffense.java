@@ -134,6 +134,7 @@ public class GetScoresOffense {
 		}
 		
 		average = total / percentageDifferenceOffense.size();
+		average = average / 100;
 		offensivePrediction(average);
 	}
 	
@@ -153,7 +154,7 @@ public class GetScoresOffense {
 			CalculateScore score = new CalculateScore();
 			score.receiveOffensiveScores(teamName, points, avgPointsGivenUp, predictedScore); 
 			GetScoresDefense d = new GetScoresDefense();
-			d.main(null);
+			d.main(opponentsArrayList, opponentScoresArrayList);
 		}
 	}
 

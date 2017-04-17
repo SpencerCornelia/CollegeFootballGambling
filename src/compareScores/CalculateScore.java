@@ -22,5 +22,9 @@ public class CalculateScore {
 	public static void receiveOffensiveScores(String teamName, double points, double avgPointsGivenUp, double predictedScore) {
 		
 	}
+	
+	public static void receiveDefensiveScores(double points, double avgPointsScored, double predictedScore) {
+		
+	}
 
 }
