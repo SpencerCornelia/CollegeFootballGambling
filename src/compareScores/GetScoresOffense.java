@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
-public class GetScores {
+public class GetScoresOffense {
 	// DB Info
 	static String DBName = "Scores2008";
 	static String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
@@ -25,7 +25,7 @@ public class GetScores {
     // array of opponents points per game average
     static ArrayList<Double>opponentsPointsPerGameArrayList = new ArrayList<Double>();
     // array of all of the score differences between team and opponents
-    static ArrayList<Double>percentageDifference = new ArrayList<Double>();
+    static ArrayList<Double>percentageDifferenceOffense = new ArrayList<Double>();
    
     // use this to check if tables exist
     static String[] teamsList = {"Air Force", "Akron", "Alabama", "Appalachian State", "Arizona", "Arizona State", "Arkansas", "Arkansas State", "Army", "Auburn", "Ball State", "Baylor", "Boise State", "Boston College", "Bowling Green", "Buffalo", "BYU", "California", "Fresno State", "UCLA", "UCF", "Central Michigan", "Charlotte", "Cincinnati", "Clemson", "Colorado", "Colorado State", "Connecticut", "Duke", "Eastern Michigan", "East Carolina", "Florida International", "Florida", "Florida Atlantic", "Florida State", "Georgia", "Georgia Southern", "Georgia Tech", "Hawaii", "Houston", "Idaho", "Illinois", "Indiana", "Iowa", "Iowa State", "Kansas", "Kansas State", "Kent State", "Kentucky", "LSU", "Louisiana Tech", "Louisiana-Lafayette", "Louisiana-Monroe", "Louisville", "Marshall", "Maryland", "Massachusetts", "Memphis", "Miami (Florida)", "Miami (Ohio)", "Michigan", "Michigan State", "Middle Tennessee", "Minnesota", "Mississippi", "Mississippi State", "Missouri", "Navy", "Nebraska", "Nevada", "UNLV", "New Mexico", "New Mexico State", "North Carolina", "North Carolina State", "North Texas", "Northern Illinois", "Northwestern", "Notre Dame", "Ohio", "Ohio State", "Oklahoma", "Oklahoma State", "Old Dominion", "Oregon", "Oregon State", "Penn State", "Pittsburgh", "Purdue", "Rice", "Rutgers", "San Diego State", "San Jose State", "South Alabama", "South Carolina", "South Florida", "USC", "SMU", "Southern Mississippi", "Stanford", "Syracuse", "TCU", "Temple", "Tennessee", "Texas", "Texas A&M", "Texas State", "Texas Tech", "UTEP", "UTSA", "Toledo", "Troy", "Tulane", "Tulsa", "Utah", "Utah State", "Vanderbilt", "Virginia", "Virginia Tech", "Wake Forest", "Washington", "Washington State", "West Virginia", "Western Kentucky", "Western Michigan", "Wisconsin", "Wyoming", "UAB", "Georgia State"};
@@ -38,7 +38,7 @@ public class GetScores {
 		opponentsArrayList.clear();
 		teamScoresArrayList.clear();
 		opponentScoresArrayList.clear();
-		percentageDifference.clear();
+		percentageDifferenceOffense.clear();
 	}
 	
 	public static void scores() {
@@ -78,16 +78,19 @@ public class GetScores {
 			System.out.println("exception is " + ex);
 		}
 		
-		getOpponentScoreAverages(opponentsArrayList);
+		getOpponentDefensiveScoreAverages(opponentsArrayList);
 	}
 	
-	public static void getOpponentScoreAverages(ArrayList<String> opponentsArrayList) {
+	// this method looks up each opponent and saves their average points given up
+	public static void getOpponentDefensiveScoreAverages(ArrayList<String> opponentsArrayList) {
+		
 		String StatsDBName = "CollegeFootballStats2008";
 		String StatsDBurl = "jdbc:mysql://localhost:3306/" + StatsDBName + "?useSSL=false";
 		
 		for (int i = 0; i < opponentsArrayList.size(); i++) {
 			String opp = opponentsArrayList.get(i);
 			int checkMe = teamsArrayList.indexOf(opp);
+			// make sure team shows in teamsArrayList to avoid error looking up DB info
 			if (checkMe != -1) {
 				try {
 					// 1. Get a connection to database
@@ -120,28 +123,37 @@ public class GetScores {
 	
 	public static void compareScore(double opponentPoints, int teamScore) {
 		double difference = (teamScore - opponentPoints);
-		percentageDifference.add(difference);
+		percentageDifferenceOffense.add(difference);
 	}
 	
 	public static void calculateScoreDifference() {
 		double average = 0;
 		double total = 0;
-		for (int i = 0; i < percentageDifference.size(); i++) {
-			total += percentageDifference.get(i);
+		for (int i = 0; i < percentageDifferenceOffense.size(); i++) {
+			total += percentageDifferenceOffense.get(i);
 		}
 		
-		average = total / percentageDifference.size();
-		compareScores(average);
+		average = total / percentageDifferenceOffense.size();
+		offensivePrediction(average);
 	}
 	
-	public static void compareScores(double averagePointsPercent) {
+	public static void offensivePrediction(double averagePointsPercent) {
+		// averagePointsPercent is delta between points scored and opponents points given up
 		
 		for (int i = 0; i < teamScoresArrayList.size(); i++) {
+			// points scored by team in every game of one season
 			double points = teamScoresArrayList.get(i);
-			System.out.println(teamName + " scored " + points);
+			
+			// average points given up by opponent
 			double avgPointsGivenUp = opponentsPointsPerGameArrayList.get(i);
-			System.out.println("Opponent gave up " + avgPointsGivenUp);
-			double AirForcePoints = 35.2;
+			
+			// predict score of team
+			double predictedScore = avgPointsGivenUp + (averagePointsPercent * avgPointsGivenUp);
+			
+			CalculateScore score = new CalculateScore();
+			score.receiveOffensiveScores(teamName, points, avgPointsGivenUp, predictedScore); 
+			GetScoresDefense d = new GetScoresDefense();
+			d.main(null);
 		}
 	}
 
