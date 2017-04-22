@@ -3,6 +3,7 @@ package compareScores;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +32,7 @@ public class GetScoresOffense {
     static String[] teamsList = {"Air Force", "Akron", "Alabama", "Appalachian State", "Arizona", "Arizona State", "Arkansas", "Arkansas State", "Army", "Auburn", "Ball State", "Baylor", "Boise State", "Boston College", "Bowling Green", "Buffalo", "BYU", "California", "Fresno State", "UCLA", "UCF", "Central Michigan", "Charlotte", "Cincinnati", "Clemson", "Colorado", "Colorado State", "Connecticut", "Duke", "Eastern Michigan", "East Carolina", "Florida International", "Florida", "Florida Atlantic", "Florida State", "Georgia", "Georgia Southern", "Georgia Tech", "Hawaii", "Houston", "Idaho", "Illinois", "Indiana", "Iowa", "Iowa State", "Kansas", "Kansas State", "Kent State", "Kentucky", "LSU", "Louisiana Tech", "Louisiana-Lafayette", "Louisiana-Monroe", "Louisville", "Marshall", "Maryland", "Massachusetts", "Memphis", "Miami (Florida)", "Miami (Ohio)", "Michigan", "Michigan State", "Middle Tennessee", "Minnesota", "Mississippi", "Mississippi State", "Missouri", "Navy", "Nebraska", "Nevada", "UNLV", "New Mexico", "New Mexico State", "North Carolina", "North Carolina State", "North Texas", "Northern Illinois", "Northwestern", "Notre Dame", "Ohio", "Ohio State", "Oklahoma", "Oklahoma State", "Old Dominion", "Oregon", "Oregon State", "Penn State", "Pittsburgh", "Purdue", "Rice", "Rutgers", "San Diego State", "San Jose State", "South Alabama", "South Carolina", "South Florida", "USC", "SMU", "Southern Mississippi", "Stanford", "Syracuse", "TCU", "Temple", "Tennessee", "Texas", "Texas A&M", "Texas State", "Texas Tech", "UTEP", "UTSA", "Toledo", "Troy", "Tulane", "Tulsa", "Utah", "Utah State", "Vanderbilt", "Virginia", "Virginia Tech", "Wake Forest", "Washington", "Washington State", "West Virginia", "Western Kentucky", "Western Michigan", "Wisconsin", "Wyoming", "UAB", "Georgia State"};
 	static ArrayList<String> teamsArrayList = new ArrayList<String>(Arrays.asList(teamsList));
     
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		scores();
 		
 		// clear all Array Lists after calculation in order to be empty for use by next team
@@ -41,7 +42,7 @@ public class GetScoresOffense {
 		percentageDifferenceOffense.clear();
 	}
 	
-	public static void scores() {
+	public static void scores() throws SQLException {
 		
 		try {
 			// 1. Get a connection to database
@@ -82,7 +83,7 @@ public class GetScoresOffense {
 	}
 	
 	// this method looks up each opponent and saves their average points given up
-	public static void getOpponentDefensiveScoreAverages(ArrayList<String> opponentsArrayList) {
+	public static void getOpponentDefensiveScoreAverages(ArrayList<String> opponentsArrayList) throws SQLException {
 		
 		String StatsDBName = "CollegeFootballStats2008";
 		String StatsDBurl = "jdbc:mysql://localhost:3306/" + StatsDBName + "?useSSL=false";
@@ -126,7 +127,7 @@ public class GetScoresOffense {
 		percentageDifferenceOffense.add(difference);
 	}
 	
-	public static void calculateScoreDifference() {
+	public static void calculateScoreDifference() throws SQLException {
 		double average = 0;
 		double total = 0;
 		for (int i = 0; i < percentageDifferenceOffense.size(); i++) {
@@ -138,8 +139,12 @@ public class GetScoresOffense {
 		offensivePrediction(average);
 	}
 	
-	public static void offensivePrediction(double averagePointsPercent) {
+	public static void offensivePrediction(double averagePointsPercent) throws SQLException {
 		// averagePointsPercent is delta between points scored and opponents points given up
+		
+		// clear ArrayLists in CalculateScore before adding new data to them
+		CalculateScore clearArray = new CalculateScore();
+		clearArray.clearArrayLists();
 		
 		for (int i = 0; i < teamScoresArrayList.size(); i++) {
 			// points scored by team in every game of one season
@@ -156,6 +161,9 @@ public class GetScoresOffense {
 			GetScoresDefense d = new GetScoresDefense();
 			d.main(opponentsArrayList, opponentScoresArrayList);
 		}
+		
+		CalculateScore s = new CalculateScore();
+		s.calculateFinalScore();
 	}
 
 }

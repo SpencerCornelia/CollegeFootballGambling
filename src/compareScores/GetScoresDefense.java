@@ -3,6 +3,7 @@ package compareScores;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,21 +25,22 @@ public class GetScoresDefense {
     // array of opponents scores
     static ArrayList<Integer> arrayListOfOpponentsScores;
 
-	public static void main(ArrayList<String> opponentsArrayList, ArrayList<Integer> opponentScoresArrayList) {
+	public static void main(ArrayList<String> opponentsArrayList, ArrayList<Integer> opponentScoresArrayList) throws SQLException {
 		arrayListOfOpponents = opponentsArrayList;
 		arrayListOfOpponentsScores = opponentScoresArrayList;
 		getOpponentOffensiveScoreAverages();
 	}
 
-	public static void getOpponentOffensiveScoreAverages() {
+	public static void getOpponentOffensiveScoreAverages() throws SQLException {
 		String StatsDBName = "CollegeFootballStats2008";
 		String StatsDBurl = "jdbc:mysql://localhost:3306/" + StatsDBName + "?useSSL=false";
 		
 		for (int i = 0; i < arrayListOfOpponents.size(); i++) {
 			String opp = arrayListOfOpponents.get(i);
+			Connection myConn = null;
 			try {
 				// 1. Get a connection to database
-				Connection myConn = DriverManager.getConnection(StatsDBurl, DBusername, DBpassword);
+				myConn = DriverManager.getConnection(StatsDBurl, DBusername, DBpassword);
 				
 				// 2. Create a statement
 				Statement myStmt = myConn.createStatement();
@@ -58,6 +60,10 @@ public class GetScoresDefense {
 		
 			} catch (Exception ex) {
 				System.out.println("exception is " + ex);
+			} finally {
+				if (myConn != null) {
+					myConn.close();
+				}
 			}
 		}
 		
@@ -93,10 +99,6 @@ public class GetScoresDefense {
 			
 			// predict score of team
 			double predictedScore = avgPointsScored + (averagePointsPercent * avgPointsScored);
-			
-			System.out.println("Air Force gave up " + points + " in this game");
-			System.out.println("Opponents averaged " + avgPointsScored);
-			System.out.println("Air Force should have given up " + predictedScore);
 			
 			CalculateScore score = new CalculateScore();
 			score.receiveDefensiveScores(points, avgPointsScored, predictedScore); 
