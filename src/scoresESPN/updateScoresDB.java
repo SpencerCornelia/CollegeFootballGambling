@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class updateScoresDB {
 	// DB Info
-	String DBName = "Test";
+	String DBName = "Scores2016";
 	String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 	String DBusername = "root";
 	String DBpassword = "Wutangclan25";
@@ -88,7 +88,6 @@ public class updateScoresDB {
 
 			} catch (Exception ex) {
 				System.out.println("exception is " + ex);
-				System.out.println("Opponent is " + opponent);
 			}
 		}
 		
@@ -98,6 +97,7 @@ public class updateScoresDB {
 		opponentsScoresArrayList.clear();
 	}
 
+	// handles Hawaii as opponent name
 	public void teamHawaii(int teamScore, int opponentScore) {
 		try {
 			// 1. Get a connection to database
@@ -117,6 +117,7 @@ public class updateScoresDB {
 		}
 	}
 
+	// handles San Jose State as opponent name
 	public void teamSanJose(int teamScore, int opponentScore) {
 		try {
 			// 1. Get a connection to database

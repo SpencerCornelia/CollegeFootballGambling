@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Driver {
 
 	public static void main(String[] args) {
-		String DBName = "Scores2008";
+		String DBName = "Scores2016";
 		String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 		String DBusername = "root";
 		String DBpassword = "Wutangclan25";
@@ -62,18 +62,6 @@ public class Driver {
 				}
 			}
 			
-			
-			// update the Scores DB for San Jose State
-			/* 
-			int createTableRs;
-			for (int i = 0; i < 1; i++) {
-				createTableRs = threeStmt.executeUpdate(
-					"UPDATE " + "`" + DBName + "`.`" + teamsList[i] + "` "
-				    + "SET `Opponent` = '" + "San Jose State" +"' "
-					+ "WHERE `Opponent`='" + "San José State" + "'"		
-				);
-			}
-			*/
 			
 			// ***** Use updateNumOfGames.java file for creating first row of data in a new table *****
 			//   ***  This is query for creating new CollegeFootballStats schema in DB 
