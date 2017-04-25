@@ -1,12 +1,6 @@
 package compareScores;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
 
 public class CalculateScore {
 	// DB info
@@ -31,27 +25,28 @@ public class CalculateScore {
 		
 	}
 	
-	public static void receiveOffensiveScores(String teamName, double points, double avgPointsGivenUp, double predictedScore) {
+	public void receiveOffensiveScores(String teamName, double points, double avgPointsGivenUp, double predictedScore) {
 		team = teamName;
 		offensivePoints.add(points);
 		opponentAvgPointsGivenUp.add(avgPointsGivenUp);
 		offensivePredictedScore.add(predictedScore);
 	}
 	
-	public static void receiveDefensiveScores(double points, double avgPointsScored, double predictedScore) {
+	public void receiveDefensiveScores(double points, double avgPointsScored, double predictedScore) {
 		defensivePoints.add(points);
 		opponentAvgPointsScored.add(avgPointsScored);
 		defensivePredictedScore.add(predictedScore);
 	}
 	
-	public static void calculateFinalScore() {
+	public void calculateFinalScore() {
 		for (int i = 0; i < offensivePoints.size(); i++) {
 			System.out.println(team + " scored " + offensivePoints.get(i) + " and gave up " + defensivePoints.get(i));
+			System.out.println("Predicted score = " + offensivePredictedScore.get(i) + " - " + defensivePredictedScore.get(i));
 		}
 	}
 
 	
-	public static void clearArrayLists() {
+	public void clearArrayLists() {
 		offensivePoints.clear();
 		opponentAvgPointsGivenUp.clear();
 		offensivePredictedScore.clear();

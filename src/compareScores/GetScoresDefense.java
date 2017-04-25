@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
 
 public class GetScoresDefense {
 	// DB Info
@@ -25,7 +23,7 @@ public class GetScoresDefense {
     // array of opponents scores
     static ArrayList<Integer> arrayListOfOpponentsScores;
 
-	public static void main(ArrayList<String> opponentsArrayList, ArrayList<Integer> opponentScoresArrayList) throws SQLException {
+	public void main(ArrayList<String> opponentsArrayList, ArrayList<Integer> opponentScoresArrayList) throws SQLException {
 		arrayListOfOpponents = opponentsArrayList;
 		arrayListOfOpponentsScores = opponentScoresArrayList;
 		getOpponentOffensiveScoreAverages();
@@ -36,7 +34,6 @@ public class GetScoresDefense {
 		String StatsDBurl = "jdbc:mysql://localhost:3306/" + StatsDBName + "?useSSL=false";
 		
 		for (int i = 0; i < arrayListOfOpponents.size(); i++) {
-			String opp = arrayListOfOpponents.get(i);
 			Connection myConn = null;
 			try {
 				// 1. Get a connection to database

@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
 
 public class GetScoresOffense {
 	// DB Info
@@ -16,7 +15,7 @@ public class GetScoresOffense {
 	static String DBusername = "root";
 	static String DBpassword = "Wutangclan25";
 	
-	static String teamName = "Air Force";
+	static String teamName = "Akron";
 	// array of opponents faced by team one
     static ArrayList<String> opponentsArrayList = new ArrayList<String>();
     // array of scores for team
