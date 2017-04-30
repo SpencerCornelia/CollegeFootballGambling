@@ -38,6 +38,7 @@ public class CalculateScore {
 		defensivePredictedScore.add(predictedScore);
 	}
 	
+	// this method gets called from GetScoresOffense class
 	public void calculateFinalScore() {
 		for (int i = 0; i < offensivePoints.size(); i++) {
 			System.out.println(team + " scored " + offensivePoints.get(i) + " and gave up " + defensivePoints.get(i));

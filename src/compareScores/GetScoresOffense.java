@@ -1,3 +1,9 @@
+/*
+ * this class grabs opponents points given up average and compares with teamName's scoring output for
+ * each game.  then calculates how many points teamName should have scored in comparison with opponents
+ * average points given up.  prediction uses the percentage difference to predict future scores
+ */
+
 package compareScores;
 
 import java.sql.Connection;
@@ -15,7 +21,7 @@ public class GetScoresOffense {
 	static String DBusername = "root";
 	static String DBpassword = "Wutangclan25";
 	
-	static String teamName = "Akron";
+	static String teamName = "Alabama";
 	// array of opponents faced by team one
     static ArrayList<String> opponentsArrayList = new ArrayList<String>();
     // array of scores for team
