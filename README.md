@@ -4,9 +4,12 @@ The goal of this project is to create a simulator used to predict college footba
 
 The process is to web scrape data from a college football stats website, scrape the schedules of two competing teams, run the teams through an algorithm, and produce a most likely outcome.
 
-Two pieces of data:
+Three pieces of data:
 1. The schedules of two teams.  This data will be used to evaluate how a team does against its level of competition.
 2. Around 30 different stat categories used to evaluate the quality of a college football team.  These range from yards per play, pass completion percentage, and first down percentage on offense to points allowed per game and tackles for loss per game on defense.
+3. Historical point spreads from Vegas casinos.
+
+Since I have access to historical point spreads, team scores, and team statistics from the eyar 2008 until present, I will be able to write an algorithm and test against actual results.  My hope is that predicting past events will be similar to predicting future events.
 
 This will be an ongoing project as I will need to constantly test my algorithm as more data becomes available (future games being played).
 
