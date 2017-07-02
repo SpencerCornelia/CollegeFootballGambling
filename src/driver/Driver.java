@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Driver {
 
 	public static void main(String[] args) {
-		String DBName = "Spreads2008";
+		String DBName = "Scores2008";
 		String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 		String DBusername = "root";
 		String DBpassword = "Wutangclan25";
@@ -49,7 +49,7 @@ public class Driver {
 				);
 			}
 			*/
-			// *** use this for all of the teams that get inputted incorrectly as Opponents
+			// *** use this for all of the teams that get inputed incorrectly as Opponents
 			// *** need to run this after every week of inputting teams from ESPN scores
 			// *** make sure DB = scoresYY
 			/*
@@ -138,8 +138,8 @@ public class Driver {
 			*/
 			
 			// this updates Spread DB --> insert values into teamName, teams, spread, and totals
-			
-			String teamName = "Buffalo";
+			/*
+			String teamName = "";
 			String[] teams = {};
 			String[] spread = {};
 			Double[] totals = {};
@@ -152,7 +152,7 @@ public class Driver {
 					+ "VALUES (" + "'" + teams[i] + "'" + ", " + spread[i] + ", " + totals[i] + ");"
 				);
 			}
-			
+			*/
 		} catch (Exception ex) {
 			System.out.println("exception is " + ex);
 		}
