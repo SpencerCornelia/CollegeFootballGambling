@@ -1,10 +1,15 @@
 package compareScores;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import compareAgainstSpread.Handicap;
+
 public class CalculateScore {
-	// DB info
-	static String DBName = "Scores2008";
+	static String year = "2008";
+	
+	//DB info
+	static String DBName = "Scores" + year;
 	static String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 	static String DBusername = "root";
 	static String DBpassword = "Wutangclan25";
@@ -39,11 +44,19 @@ public class CalculateScore {
 	}
 	
 	// this method gets called from GetScoresOffense class
-	public void calculateFinalScore() {
+	public void calculateFinalScore() throws SQLException {
+		//call the main class once so that the ArrayList can have all necessary data
+		Handicap.main(team);
 		for (int i = 0; i < offensivePoints.size(); i++) {
-			System.out.println(team + " scored " + offensivePoints.get(i) + " and gave up " + defensivePoints.get(i));
-			System.out.println("Predicted score = " + offensivePredictedScore.get(i) + " - " + defensivePredictedScore.get(i));
+			Double pointsOnOffense = offensivePoints.get(i);
+			Double pointsOnDefense = defensivePoints.get(i);
+			Double predictOffenseScore = offensivePredictedScore.get(i);
+			Double predictDefenseScore = defensivePredictedScore.get(i);
+			
+			Integer counter = i + 1;
+			Handicap.calculateWin(counter, pointsOnOffense, pointsOnDefense, predictOffenseScore, predictDefenseScore);
 		}
+		Handicap.clearSpreads();
 	}
 
 	

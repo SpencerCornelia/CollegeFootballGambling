@@ -8,8 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class GetScoresDefense {
+	static String year = "2008";
+	
 	// DB Info
-	static String DBName = "Scores2008";
+	static String DBName = "Scores" + year;
 	static String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 	static String DBusername = "root";
 	static String DBpassword = "Wutangclan25";
@@ -30,7 +32,7 @@ public class GetScoresDefense {
 	}
 
 	public static void getOpponentOffensiveScoreAverages() throws SQLException {
-		String StatsDBName = "CollegeFootballStats2008";
+		String StatsDBName = "CollegeFootballStats" + year;
 		String StatsDBurl = "jdbc:mysql://localhost:3306/" + StatsDBName + "?useSSL=false";
 		
 		for (int i = 0; i < arrayListOfOpponents.size(); i++) {

@@ -15,13 +15,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class GetScoresOffense {
+	static String year = "2008";
 	// DB Info
-	static String DBName = "Scores2008";
+	static String DBName = "Scores" + year;
 	static String DBurl = "jdbc:mysql://localhost:3306/" + DBName + "?useSSL=false";
 	static String DBusername = "root";
 	static String DBpassword = "Wutangclan25";
 	
-	static String teamName = "Alabama";
+	static String teamName = "Air Force";
 	// array of opponents faced by team one
     static ArrayList<String> opponentsArrayList = new ArrayList<String>();
     // array of scores for team
@@ -90,7 +91,7 @@ public class GetScoresOffense {
 	// this method looks up each opponent and saves their average points given up
 	public static void getOpponentDefensiveScoreAverages(ArrayList<String> opponentsArrayList) throws SQLException {
 		
-		String StatsDBName = "CollegeFootballStats2008";
+		String StatsDBName = "CollegeFootballStats" + year;
 		String StatsDBurl = "jdbc:mysql://localhost:3306/" + StatsDBName + "?useSSL=false";
 		
 		for (int i = 0; i < opponentsArrayList.size(); i++) {
