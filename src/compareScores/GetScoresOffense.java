@@ -78,7 +78,8 @@ public class GetScoresOffense {
 				int opponentScore = executioner.getInt("OpponentScore");
 				if (checkMe != -1) {
 					opponentScoresArrayList.add(opponentScore);
-				}
+				}				// check to see if opponent exists in database
+
 			}
 	
 		} catch (Exception ex) {
